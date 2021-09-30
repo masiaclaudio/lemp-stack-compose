@@ -27,15 +27,13 @@
 # File Description : Compose file to override docker-compose.yml for example.com
 ###
 
-version: '2.4'
+version: '3.8'
 
 services:
 
     # Container: example-com-web. Upstream server using official Nginx image.
     example-com-web:
-        extends:
-            file: common-services.yml
-            service: nginx
+        image: vkucukcakar/nginx
         restart: on-failure
         container_name: example-com-web
         depends_on:
@@ -61,9 +59,7 @@ services:
 
     # Container: example-com-php. Upstream server's php using official PHP based image.
     example-com-php:
-        extends:
-            file: common-services.yml
-            service: php-fpm
+        image: vkucukcakar/php-fpm
         restart: on-failure
         container_name: example-com-php
         depends_on:

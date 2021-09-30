@@ -27,20 +27,17 @@
 # File Description : Main Compose file for server related common containers
 ###
 
-version: '2.4'
+version: '3.8'
 
 services:
 
     # Container: server-proxy. Common reverse proxy.
     server-proxy:
-        extends:
-            file: common-services.yml
-            service: nginx
+        image: vkucukcakar/nginx
         restart: on-failure
         container_name: server-proxy
         depends_on:
-            server-log:
-                condition: service_healthy
+            - server-log
         ports:
             - "80:80"
             - "443:443"
@@ -63,9 +60,7 @@ services:
 
     # Container: server-log. Common rsyslog and and its own logrotate service.
     server-log:
-        extends:
-            file: common-services.yml
-            service: rsyslog
+        image: vkucukcakar/rsyslog
         restart: on-failure
         container_name: server-log
         healthcheck:
@@ -93,14 +88,11 @@ services:
 
     # Container: server-db. Common MySql database.
     server-db:
-        extends:
-            file: common-services.yml
-            service: mysql
+        image: mariadb:10
         restart: on-failure
         container_name: server-db
         depends_on:
-            server-log:
-                condition: service_healthy
+            - server-log
         expose:
             - "3306"
         ports:
@@ -142,9 +134,7 @@ services:
 
     # Container: server-adminer. Common adminer.
     server-adminer:
-        extends:
-            file: common-services.yml
-            service: adminer
+        image: adminer:standalone
         restart: on-failure
         container_name: server-adminer
         depends_on:
@@ -160,7 +150,7 @@ services:
         environment:
             ADMINER_DEFAULT_SERVER: server-db
             # Want to change design? See https://www.adminer.org/ for alternative designs
-            #ADMINER_DESIGN: pepa-linha
+            ADMINER_DESIGN: pepa-linha
         volumes:
             # Override php.ini limits for SQL/file import
             - ./configurations/server-adminer/adminer-custom-php.ini:/usr/local/etc/php/conf.d/adminer-custom-php.ini
@@ -168,29 +158,26 @@ services:
             server-db:
 
     # Container: server-gui. Common Portainer gui.
-    server-gui:
-        extends:
-            file: common-services.yml
-            service: portainer
-        restart: on-failure
-        container_name: server-gui
-        depends_on:
-            server-log:
-                condition: service_healthy
-        ports:
-            # Accessible only from localhost. Changing to "9000:9000" will make Portainer accessible from the Internet
-            - "127.0.0.1:9000:9000"
-        command: -l hide-me=from-portainer
-        labels:
-            hide-me: "from-portainer"
-        logging:
-            driver: syslog
-            options:
-                syslog-address: "tcp://localhost:5514"
-                tag: "server-gui"
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - portainer_data:/data
+    #server-gui:
+    #    image: portainer/portainer-ce
+    #    restart: on-failure
+    #    container_name: server-gui
+    #    depends_on:
+    #        - server-log
+    #    ports:
+    #        # Accessible only from localhost. Changing to "9000:9000" will make Portainer accessible from the Internet
+    #        - "127.0.0.1:9000:9000"
+    #    command: -l hide-me=from-portainer
+    #    labels:
+    #        hide-me: "from-portainer"
+    #    logging:
+    #        driver: syslog
+    #        options:
+    #            syslog-address: "tcp://localhost:5514"
+    #            tag: "server-gui"
+    #    volumes:
+    #        - /var/run/docker.sock:/var/run/docker.sock
+    #        - portainer_data:/data
 
     # Container: server-mta. Common mail transfer agent.
     #server-mta:
@@ -200,7 +187,7 @@ services:
 # Named volumes
 volumes:
     db_data:
-    portainer_data:
+    #portainer_data:
 
 # Networks
 networks:
