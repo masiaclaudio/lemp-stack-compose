@@ -133,29 +133,29 @@ services:
     #        server-db:
 
     # Container: server-adminer. Common adminer.
-    server-adminer:
-        image: adminer:standalone
-        restart: on-failure
-        container_name: server-adminer
-        depends_on:
-            - server-db
-        ports:
-            # Accessible only from localhost. Changing to "8080:8080" will make Adminer accessible from the Internet
-            - "127.0.0.1:8080:8080"
-        logging:
-            driver: syslog
-            options:
-                syslog-address: "tcp://localhost:5514"
-                tag: "server-adminer"
-        environment:
-            ADMINER_DEFAULT_SERVER: server-db
-            # Want to change design? See https://www.adminer.org/ for alternative designs
-            ADMINER_DESIGN: pepa-linha
-        volumes:
-            # Override php.ini limits for SQL/file import
-            - ./configurations/server-adminer/adminer-custom-php.ini:/usr/local/etc/php/conf.d/adminer-custom-php.ini
-        networks:
-            server-db:
+    #server-adminer:
+    #    image: adminer:standalone
+    #    restart: on-failure
+    #    container_name: server-adminer
+    #    depends_on:
+    #        - server-db
+    #    ports:
+    #        # Accessible only from localhost. Changing to "8080:8080" will make Adminer accessible from the Internet
+    #        - "127.0.0.1:8080:8080"
+    #    logging:
+    #        driver: syslog
+    #        options:
+    #            syslog-address: "tcp://localhost:5514"
+    #            tag: "server-adminer"
+    #    environment:
+    #        ADMINER_DEFAULT_SERVER: server-db
+    #        # Want to change design? See https://www.adminer.org/ for alternative designs
+    #        ADMINER_DESIGN: pepa-linha
+    #    volumes:
+    #        # Override php.ini limits for SQL/file import
+    #        - ./configurations/server-adminer/adminer-custom-php.ini:/usr/local/etc/php/conf.d/adminer-custom-php.ini
+    #    networks:
+    #        server-db:
 
     # Container: server-gui. Common Portainer gui.
     #server-gui:
