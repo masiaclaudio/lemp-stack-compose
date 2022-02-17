@@ -60,6 +60,7 @@ services:
     # Container: ${CONTAINER_NAME}-php. Upstream server's php using official PHP based image.
     ${CONTAINER_NAME}-php:
         image: vkucukcakar/php-fpm
+        #image: masiaclaudio/php-fpm:latest-extras-typo3
         restart: on-failure
         container_name: ${CONTAINER_NAME}-php
         depends_on:
