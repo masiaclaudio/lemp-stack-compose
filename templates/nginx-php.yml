@@ -34,7 +34,7 @@ services:
     # Container: ${CONTAINER_NAME}-web. Upstream server using official Nginx image.
     ${CONTAINER_NAME}-web:
         image: vkucukcakar/nginx
-        #image: masiaclaudio/nginx:typo3
+        #image: claudiomasia/nginx:typo3
         restart: on-failure
         container_name: ${CONTAINER_NAME}-web
         depends_on:
@@ -62,7 +62,7 @@ services:
     # Container: ${CONTAINER_NAME}-php. Upstream server's php using official PHP based image.
     ${CONTAINER_NAME}-php:
         image: vkucukcakar/php-fpm
-        #image: masiaclaudio/php-fpm:latest-extras-typo3
+        #image: claudiomasia/php-fpm:latest-extras-typo3
         restart: on-failure
         container_name: ${CONTAINER_NAME}-php
         depends_on:
