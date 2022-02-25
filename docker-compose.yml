@@ -53,6 +53,7 @@ services:
             CERT_CREATE_default_server: enable
             DHPARAM_CREATE: enable
             DHPARAM_KEYSIZE: 2048
+            TZ: Europe/Rome
         volumes:
             - ./configurations/server-proxy:/configurations
             # See README.md to learn how to activate Let's Encrypt support
@@ -60,7 +61,8 @@ services:
 
     # Container: server-log. Common rsyslog and and its own logrotate service.
     server-log:
-        image: vkucukcakar/rsyslog
+        #image: vkucukcakar/rsyslog
+        image: claudiomasia/rsyslog
         restart: on-failure
         container_name: server-log
         healthcheck:
@@ -76,6 +78,7 @@ services:
             CONTAINER_NAME: server-log
             COMMON_TAG: server-common
             CONTAINER_TAGS: "server-proxy"
+            TZ: Europe/Rome
         volumes:
             - ./log:/var/log
             - ./configurations/server-log:/configurations
@@ -109,6 +112,7 @@ services:
         environment:
             # Change the default mysql root password here!
             MYSQL_ROOT_PASSWORD: toor
+            TZ: Europe/Rome
         networks:
             server-db:
 
