@@ -33,8 +33,7 @@ services:
 
     # Container: ${CONTAINER_NAME}-web. Upstream server using official Nginx image.
     ${CONTAINER_NAME}-web:
-        image: vkucukcakar/nginx
-        #image: claudiomasia/nginx:typo3
+        image: claudiomasia/nginx
         restart: on-failure
         container_name: ${CONTAINER_NAME}-web
         depends_on:
@@ -53,6 +52,7 @@ services:
             #SERVER_ROLE: upstream-typo3
             DOMAIN_NAME: "${DOMAIN_NAME}"
             PHP_CONTAINER_NAME: ${CONTAINER_NAME}-php
+            TZ: Europe/Rome
         volumes:
             - ./html/${DOMAIN_NAME}:/var/www/html
             - ./configurations/${CONTAINER_NAME}:/configurations
@@ -61,8 +61,8 @@ services:
 
     # Container: ${CONTAINER_NAME}-php. Upstream server's php using official PHP based image.
     ${CONTAINER_NAME}-php:
-        image: vkucukcakar/php-fpm
-        #image: claudiomasia/php-fpm:latest-extras-typo3
+        image: claudiomasia/php-fpm
+        #image: claudiomasia/php-fpm:typo311lts
         restart: on-failure
         container_name: ${CONTAINER_NAME}-php
         depends_on:
@@ -87,6 +87,7 @@ services:
             CHANGE_UID: 1000
             # Change gid of default group www-data. You can make this match your current gid (id -g) on host for development.
             CHANGE_GID: 1000
+            TZ: Europe/Rome
         volumes:
             - ./html/${DOMAIN_NAME}:/var/www/html
             - ./configurations/${CONTAINER_NAME}:/configurations

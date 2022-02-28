@@ -33,7 +33,7 @@ services:
 
     # Container: server-proxy. Common reverse proxy.
     server-proxy:
-        image: vkucukcakar/nginx
+        image: claudiomasia/nginx
         restart: on-failure
         container_name: server-proxy
         depends_on:
