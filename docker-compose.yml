@@ -116,23 +116,22 @@ services:
         networks:
             server-db:
 
-    # Container: server-phpmyadmin. Common Phpmyadmin.
-    #server-phpmyadmin:
-    #    extends:
-    #        file: common-services.yml
-    #        service: phpmyadmin
-    #    container_name: server-phpmyadmin
+    # Container: phpmyadmin. Common Phpmyadmin.
+    #phpmyadmin:
+    #    image: phpmyadmin
+    #    container_name: phpmyadmin
     #    depends_on:
+    #        - server-log
     #        - server-db
     #    logging:
     #        driver: syslog
     #        options:
     #            syslog-address: "tcp://localhost:5514"
-    #            tag: "server-phpmyadmin"
+    #            tag: "phpmyadmin"
+    #    ports:
+    #        - "8080:80"
     #    environment:
-    #        # Write mysql root password here
-    #        MYSQL_ROOT_PASSWORD: toor
-    #        PMA_HOST: server-db
+    #        PMA_ARBITRARY: 1
     #    networks:
     #        server-db:
 
