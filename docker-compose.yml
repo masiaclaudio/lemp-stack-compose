@@ -57,7 +57,7 @@ services:
         volumes:
             - ./configurations/server-proxy:/configurations
             # See README.md to learn how to activate Let's Encrypt support
-            #- /etc/letsencrypt/live:/etc/letsencrypt/live
+            #- /etc/letsencrypt:/etc/letsencrypt
 
     # Container: server-log. Common rsyslog and and its own logrotate service.
     server-log:
