@@ -58,6 +58,8 @@ services:
             - ./configurations/server-proxy:/configurations
             # See README.md to learn how to activate Let's Encrypt support
             #- /etc/letsencrypt:/etc/letsencrypt
+            # If OS is Google Container-Optimized OS (create etc/letsencrypt folder on lemp stack root)
+            #- ./etc/letsencrypt:/etc/letsencrypt
 
     # Container: server-log. Common rsyslog and and its own logrotate service.
     server-log:
